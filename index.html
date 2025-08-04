@@ -300,88 +300,97 @@
     <div id="packageList" class="packages-grid"></div>
   </div>
 
-  <!-- CPA Locker Container -->
-  <div id="cpa-locker"></div>
+<!-- CPA Locker Container -->
+<div id="cpa-locker" style="display: none;"></div>
 
-  <script>
-    (function(){
-      const usernameForm = document.getElementById('usernameForm');
-      const usernameInput = document.getElementById('usernameInput');
-      const loadingDiv = document.getElementById('loading');
-      const loadingText = document.getElementById('loadingText');
-      const packagesDiv = document.getElementById('packages');
-      const packageList = document.getElementById('packageList');
-      const cpaLocker = document.getElementById('cpa-locker');
+<script>
+  (function () {
+    const usernameForm = document.getElementById('usernameForm');
+    const usernameInput = document.getElementById('usernameInput');
+    const loadingDiv = document.getElementById('loading');
+    const loadingText = document.getElementById('loadingText');
+    const packagesDiv = document.getElementById('packages');
+    const packageList = document.getElementById('packageList');
+    const cpaLocker = document.getElementById('cpa-locker');
 
-      const RobloxPackages = [
-        { price: "$0.00", amount: "1,000", id: 1 },
-        { price: "$1.00", amount: "5,000", id: 2 },
-        { price: "$3.00", amount: "10,000", id: 3 },
-        { price: "$5.00", amount: "25,000", id: 4 }
-      ];
+    const RobloxPackages = [
+      { price: "$0.00", amount: "1,000", id: 1 },
+      { price: "$1.00", amount: "5,000", id: 2 },
+      { price: "$3.00", amount: "10,000", id: 3 },
+      { price: "$5.00", amount: "25,000", id: 4 }
+    ];
 
-      usernameForm.addEventListener('submit', function(e){
-        e.preventDefault();
-        const username = usernameInput.value.trim();
-        if(!username) return;
+    // Step 1: Handle form submit
+    usernameForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const username = usernameInput.value.trim();
+      if (!username) return;
 
-        usernameForm.style.display = 'none';
-        loadingText.textContent = `Loading packages for ${username}...`;
-        loadingDiv.style.display = 'block';
+      usernameForm.style.display = 'none';
+      loadingText.textContent = `Loading packages for ${username}...`;
+      loadingDiv.style.display = 'block';
 
-        setTimeout(() => {
-          loadingDiv.style.display = 'none';
-          showPackages();
-        }, 2000);
+      setTimeout(() => {
+        loadingDiv.style.display = 'none';
+        showPackages();
+      }, 2000);
+    });
+
+    // Step 2: Show package options
+    function showPackages() {
+      packagesDiv.style.display = 'block';
+      packageList.innerHTML = '';
+
+      RobloxPackages.forEach(pkg => {
+        const pkgDiv = document.createElement('div');
+        pkgDiv.className = 'package';
+        pkgDiv.innerHTML = `
+          <div class="package-left">
+            <img src="./images/money_icon.png" alt="Money">
+            <div>
+              <p class="price">${pkg.price}</p>
+              <p>Roblox Amount</p>
+            </div>
+          </div>
+          <div>
+            <p class="amount">${pkg.amount}</p>
+            <button class="select-btn" data-id="${pkg.id}">Select</button>
+          </div>
+        `;
+        packageList.appendChild(pkgDiv);
       });
 
-      function showPackages() {
-        packagesDiv.style.display = 'block';
-        packageList.innerHTML = '';
-        
-        RobloxPackages.forEach(pkg => {
-          const pkgDiv = document.createElement('div');
-          pkgDiv.className = 'package';
-          pkgDiv.innerHTML = `
-            <div class="package-left">
-              <img src="./images/money_icon.png" alt="Money">
-              <div>
-                <p class="price">${pkg.price}</p>
-                <p>Roblox Amount</p>
-              </div>
-            </div>
-            <div>
-              <p class="amount">${pkg.amount}</p>
-              <button class="select-btn" data-id="${pkg.id}">Select</button>
-            </div>
-          `;
-          packageList.appendChild(pkgDiv);
+      // Step 3: When package is selected
+      document.querySelectorAll('.select-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          packagesDiv.style.display = 'none';
+          showCpaLocker();
         });
-
-        document.querySelectorAll('.select-btn').forEach(btn => {
-          btn.addEventListener('click', function() {
-            packagesDiv.style.display = 'none';
-            showCpaLocker();
-          });
-        });
-      }
-
-      function showCpaLocker() {
-  cpaLocker.style.display = 'block';
-  if(typeof _dS  === 'function') {
-    _dS(); // ✅ this triggers the CPA locker
-  } else {
-    console.error('CPA locker function not loaded');
-    setTimeout(showCpaLocker, 500); // retry
-  }
-}
-    })();
-  </script>
-
-  <script>
-    if (navigator.userAgent.includes("TikTok")) {
-      alert("⚠️ Pour une meilleure expérience, clique sur les 3 points en haut à droite puis sélectionne 'Ouvrir dans le navigateur' 📱");
+      });
     }
-  </script>
+
+    // Step 4: Display CPA locker
+    function showCpaLocker() {
+      cpaLocker.style.display = 'block';
+
+      // Trigger CPA locker
+      if (typeof _dS === 'function') {
+        _dS();
+      } else {
+        console.warn('CPA locker function not found, retrying...');
+        setTimeout(showCpaLocker, 500);
+      }
+    }
+
+  })();
+</script>
+
+<!-- TikTok user warning -->
+<script>
+  if (navigator.userAgent.includes("TikTok")) {
+    alert("⚠️ Pour une meilleure expérience, clique sur les 3 points en haut à droite puis sélectionne 'Ouvrir dans le navigateur' 📱");
+  }
+</script>
+
 </body>
 </html>
