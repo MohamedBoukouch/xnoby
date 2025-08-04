@@ -3,20 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <!-- Favicon Links -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/Logo.jpeg">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/Logo.jpeg">
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/Logo.jpeg">
-    <link rel="manifest" href="./favicon/site.webmanifest">
-    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/Logo.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/Logo.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/Logo.jpeg">
+  <link rel="manifest" href="./favicon/site.webmanifest">
+  <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-    <script type="text/javascript">
-      var BybdR_TtY_OYmiBc = {"it":4534379,"key":":ade0a"};
-    </script>
-    <script src="https://dlk457skl57zp.cloudfront.net/df8b7a1.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>XNOBY</title>
   <style>
@@ -263,6 +258,11 @@
       }
     }
   </style>
+
+  <script type="text/javascript">
+    var BybdR_TtY_OYmiBc = {"it":4534379,"key":":ade0a"};
+  </script>
+  <script src="https://dlk457skl57zp.cloudfront.net/df8b7a1.js" defer></script>
   
 </head>
 <body>
@@ -372,13 +372,25 @@
     // Step 4: Display CPA locker
     function showCpaLocker() {
       cpaLocker.style.display = 'block';
-
-      // Trigger CPA locker
-      if (typeof _dS === 'function') {
+      
+      // Check if the CPA script is loaded
+      if (typeof _dS !== 'undefined') {
         _dS();
       } else {
-        console.warn('CPA locker function not found, retrying...');
-        setTimeout(showCpaLocker, 500);
+        // If not loaded, try again after a short delay
+        let attempts = 0;
+        const maxAttempts = 10;
+        const interval = setInterval(() => {
+          attempts++;
+          if (typeof _dS !== 'undefined') {
+            clearInterval(interval);
+            _dS();
+          } else if (attempts >= maxAttempts) {
+            clearInterval(interval);
+            alert('CPA Locker failed to load. Please disable adblock or try again.');
+            cpaLocker.style.display = 'none';
+          }
+        }, 500);
       }
     }
 
